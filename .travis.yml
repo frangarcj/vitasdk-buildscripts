@@ -3,12 +3,15 @@ os:
   - osx
 
 compiler:
-    - gcc
     - clang
 
 language: c
 
 before_install:
+  - if [ `uname` = "Linux" ]; then
+        apt-get update;
+        apt-get install textinfo;
+      fi
 # - brew update && brew outdated cmake || brew upgrade cmake
 script:
  - export REV=dirty-$(git describe --always)
