@@ -20,7 +20,8 @@ script:
  - wget http://www.digip.org/jansson/releases/jansson-2.7.tar.gz --no-check-certificate
  - tar xf jansson-2.7.tar.gz
  - mv jansson-2.7 src/
- - ./build-prerrequisites.sh
+ - chmod +x *.sh
+ - ./build-prerequisites.sh
  - ./build-toolchain.sh
 env:
  global:
