@@ -1,9 +1,12 @@
-#MAC OS
+os:
+  - linux
+  - osx
+
 compiler:
     - gcc
     - clang
 
-language: objective-c
+language: c
 
 before_install:
 # - brew update && brew outdated cmake || brew upgrade cmake
@@ -30,14 +33,14 @@ env:
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - export GIT_TAG=$TRAVIS_BRANCH-0.1-v$TRAVIS_BUILD_NUMBER
-  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - export GIT_TAG=$TRAVIS_BRANCH-$TRAVIS_OS_NAME-0.1-v$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER - $TRAVIS_OS_NAME"
   - git push -q https://$TAGPERM@github.com/frangarcj/vitasdk-buildscripts --tags
 deploy:
   provider: releases
   api_key: $OAUTH
   file_glob: true
-  file: "/Users/travis/build/frangarcj/vitasdk-buildscripts/pkg/*.tar.bz2"
+  file: "pkg/*.tar.bz2"
   skip_cleanup: true
   on:
     tags: false
