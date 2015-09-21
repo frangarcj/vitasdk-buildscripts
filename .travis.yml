@@ -6,7 +6,7 @@ compiler:
 language: objective-c
 
 before_install:
- - brew update && brew outdated cmake || brew upgrade cmake
+# - brew update && brew outdated cmake || brew upgrade cmake
 script:
  - export REV=dirty-$(git describe --always)
  - wget https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-src.tar.bz2 --no-check-certificate
@@ -21,8 +21,8 @@ script:
  - tar xf jansson-2.7.tar.gz
  - mv jansson-2.7 src/
  - chmod +x *.sh
- - ./build-prerequisites.sh
- - ./build-toolchain.sh
+ - ./build-phase1.sh
+ - ./build-phase2.sh
 env:
  global:
   - TOP=$PWD
