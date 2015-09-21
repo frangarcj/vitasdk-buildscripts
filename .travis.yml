@@ -7,7 +7,7 @@ compiler:
 
 language: cpp
 install:
-    - if [ "`echo $CXX`" == "g++" ]; then export CXX=g++-4.8; f
+    - if [ "`echo $CXX`" == "g++" ]; then export CXX=g++-4.8; fi
 addons:
   apt:
     sources:
