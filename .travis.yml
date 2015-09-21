@@ -48,6 +48,7 @@ addons:
     - texlive-extra-utils
 # - brew update && brew outdated cmake || brew upgrade cmake
 script:
+ - x86_64-linux-gnu-g++ --version
  - export REV=dirty-$(git describe --always)
  - wget https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-src.tar.bz2 --no-check-certificate
  - tar xjf gcc-arm-none-eabi-4_9-2015q2-20150609-src.tar.bz2
