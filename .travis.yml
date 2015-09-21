@@ -11,7 +11,7 @@ language: c
 before_install:
   - if [ `uname` = "Linux" ]; then
         sudo apt-get update -qq;
-        sudo apt-get install -y textinfo;
+        sudo apt-get install -y texinfo;
       fi
 # - brew update && brew outdated cmake || brew upgrade cmake
 script:
