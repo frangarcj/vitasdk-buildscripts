@@ -29,7 +29,7 @@ env:
   - PREFIX=$TOP/dist
 deploy:
   provider: releases
-  api_key: "d3d52e4958c5c42c8ad1186501fdf97949d3b463"
+  api_key: $OAUTH
   file: "~/vitasdk-buildscripts/pkg/gcc-arm-vita-eabi-4_9-2015q3-20150921-mac.tar.bz2"
   skip_cleanup: true
   on:
