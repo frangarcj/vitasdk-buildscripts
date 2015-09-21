@@ -61,7 +61,6 @@ script:
  - chmod +x *.sh
  - ./build-phase1.sh
  - ./build-phase2.sh
- - cat build-native/gcc-first/libcpp/config.log
 env:
  global:
   - TOP=$PWD
