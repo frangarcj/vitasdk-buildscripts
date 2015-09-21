@@ -1,9 +1,9 @@
 # Copyright (c) 2011-2015, ARM Limited
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 #     * Redistributions of source code must retain the above copyright notice,
 #       this list of conditions and the following disclaimer.
 #     * Redistributions in binary form must reproduce the above copyright
@@ -12,7 +12,7 @@
 #     * Neither the name of ARM nor the names of its contributors may be used
 #       to endorse or promote products derived from this software without
 #       specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -62,7 +62,7 @@ copy_dir_clean() {
 #   parameter 2: dirname of the source tree
 #   parameter 3: target package name
 #   parameter 4-10: additional excluding
-# This function will create bz2 package for files under param1/param2, 
+# This function will create bz2 package for files under param1/param2,
 # excluding unnecessary parts, and create package named param2.
 pack_dir_clean() {
     set +u
@@ -80,7 +80,7 @@ clean_env () {
     local var_list
     local var
     var_list=`export|grep "^declare -x"|sed -e "s/declare -x //"|cut -d"=" -f1`
-    
+
     for var in $var_list ; do
         case $var in
             DEJAGNU|\
@@ -349,7 +349,7 @@ elif [ "x$uname_string" == "xdarwin" ] ; then
     READLINK=greadlink
 # Disable parallel build for mac as we will randomly run into "Permission denied" issue.
 #    JOBS=`sysctl -n hw.ncpu`
-    JOBS=1
+    JOBS=4
     GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx= -Wl,-lstdc++ -lm"
     TAR=tar
     MD5="md5 -r"
@@ -366,4 +366,3 @@ PACKAGE_NAME_MINGW=$PACKAGE_NAME-win32
 INSTALL_PACKAGE_NAME=gcc-$TARGET-$GCC_VER_NAME-$RELEASEVER
 INSTALLBASE="GNU Tools ARM Embedded"
 APPNAME="$PKGVERSION $GCC_VER_SHORT $release_year"
-
