@@ -344,6 +344,7 @@ if [ "x$uname_string" == "xlinux" ] ; then
     TAR=tar
     MD5="md5sum -b"
     PACKAGE_NAME_SUFFIX=linux
+    BRACKET=''
 elif [ "x$uname_string" == "xdarwin" ] ; then
     BUILD=x86_64-apple-darwin10
     HOST_NATIVE=x86_64-apple-darwin10
