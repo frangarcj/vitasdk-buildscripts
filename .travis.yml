@@ -8,6 +8,7 @@ compiler:
 language: cpp
 install:
     - if [ "`echo $CXX`" == "g++" ]; then export CXX=g++-4.8; fi
+    - if [ "`echo $CC`" == "gcc" ]; then export CC=gcc-4.8; fi
 addons:
   apt:
     sources:
