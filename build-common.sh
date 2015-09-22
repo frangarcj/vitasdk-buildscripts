@@ -355,7 +355,7 @@ elif [ "x$uname_string" == "xdarwin" ] ; then
     TAR=tar
     MD5="md5 -r"
     PACKAGE_NAME_SUFFIX=mac
-    BRACKET="CXXFLAGS='-g -O2 -fbracket-depth=2048' CFLAGS_FOR_TARGET='-O2' CXXFLAGS_FOR_TARGET='-O2'"
+    BRACKET=yes
 else
     error "Unsupported build system : $uname_string"
 fi
