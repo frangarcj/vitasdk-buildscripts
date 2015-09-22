@@ -1,10 +1,10 @@
 #! /usr/bin/env bash
 # Copyright (c) 2011-2015, ARM Limited
 # All rights reserved.
-# 
+#
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
-# 
+#
 #     * Redistributions of source code must retain the above copyright notice,
 #       this list of conditions and the following disclaimer.
 #     * Redistributions in binary form must reproduce the above copyright
@@ -13,7 +13,7 @@
 #     * Neither the name of ARM nor the names of its contributors may be used
 #       to endorse or promote products derived from this software without
 #       specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -304,6 +304,7 @@ popd
 echo Task [III-1] /$HOST_NATIVE/gcc-first/
 rm -rf $BUILDDIR_NATIVE/gcc-first && mkdir -p $BUILDDIR_NATIVE/gcc-first
 pushd $BUILDDIR_NATIVE/gcc-first
+if [ "x$BRACKET" != "xyes" ]; then
 $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
@@ -332,8 +333,39 @@ $SRCDIR/$GCC/configure --target=$TARGET \
     ${GCC_CONFIG_OPTS}                              \
     "${GCC_CONFIG_OPTS_LCPP}"                              \
     "--with-pkgversion=$PKGVERSION" \
-    CXXFLAGS="-g -O2 -fbracket-depth=2048" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" \
     ${MULTILIB_LIST}
+else
+$SRCDIR/$GCC/configure --target=$TARGET \
+      --prefix=$INSTALLDIR_NATIVE \
+      --libexecdir=$INSTALLDIR_NATIVE/lib \
+      --infodir=$INSTALLDIR_NATIVE_DOC/info \
+      --mandir=$INSTALLDIR_NATIVE_DOC/man \
+      --htmldir=$INSTALLDIR_NATIVE_DOC/html \
+      --pdfdir=$INSTALLDIR_NATIVE_DOC/pdf \
+      --enable-languages=c \
+      --disable-decimal-float \
+      --disable-libffi \
+      --disable-libgomp \
+      --disable-libmudflap \
+      --disable-libquadmath \
+      --disable-libssp \
+      --disable-libstdcxx-pch \
+      --disable-nls \
+      --disable-shared \
+      --disable-threads \
+      --disable-tls \
+      --with-newlib \
+      --without-headers \
+      --with-gnu-as \
+      --with-gnu-ld \
+      --with-python-dir=share/gcc-$TARGET \
+      --with-sysroot=$INSTALLDIR_NATIVE/$TARGET \
+      ${GCC_CONFIG_OPTS}                              \
+      "${GCC_CONFIG_OPTS_LCPP}"                              \
+      "--with-pkgversion=$PKGVERSION" \
+      CXXFLAGS="-g -O2 -fbracket-depth=2048" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" \
+      ${MULTILIB_LIST}
+fi
 
 make -j$JOBS all-gcc
 
@@ -396,6 +428,7 @@ ln -s . $INSTALLDIR_NATIVE/$TARGET/usr
 rm -rf $BUILDDIR_NATIVE/gcc-final && mkdir -p $BUILDDIR_NATIVE/gcc-final
 pushd $BUILDDIR_NATIVE/gcc-final
 
+if [ "x$BRACKET" != "xyes" ]; then
 $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
@@ -425,9 +458,40 @@ $SRCDIR/$GCC/configure --target=$TARGET \
     $GCC_CONFIG_OPTS                                \
     "${GCC_CONFIG_OPTS_LCPP}"                              \
     "--with-pkgversion=$PKGVERSION" \
-    CXXFLAGS="-g -O2 -fbracket-depth=2048" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" \
     ${MULTILIB_LIST}
-
+else
+$SRCDIR/$GCC/configure --target=$TARGET \
+      --prefix=$INSTALLDIR_NATIVE \
+      --libexecdir=$INSTALLDIR_NATIVE/lib \
+      --infodir=$INSTALLDIR_NATIVE_DOC/info \
+      --mandir=$INSTALLDIR_NATIVE_DOC/man \
+      --htmldir=$INSTALLDIR_NATIVE_DOC/html \
+      --pdfdir=$INSTALLDIR_NATIVE_DOC/pdf \
+      --enable-languages=c,c++ \
+      --enable-plugins \
+      --disable-decimal-float \
+      --disable-libffi \
+      --disable-libgomp \
+      --disable-libmudflap \
+      --disable-libquadmath \
+      --disable-libssp \
+      --disable-libstdcxx-pch \
+      --disable-nls \
+      --disable-shared \
+      --disable-threads \
+      --disable-tls \
+      --with-gnu-as \
+      --with-gnu-ld \
+      --with-newlib \
+      --with-headers=yes \
+      --with-python-dir=share/gcc-$TARGET \
+      --with-sysroot=$INSTALLDIR_NATIVE/$TARGET \
+      $GCC_CONFIG_OPTS                                \
+      "${GCC_CONFIG_OPTS_LCPP}"                              \
+      "--with-pkgversion=$PKGVERSION" \
+      CXXFLAGS="-g -O2 -fbracket-depth=2048" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" \
+      ${MULTILIB_LIST}
+fi
 # Passing USE_TM_CLONE_REGISTRY=0 via INHIBIT_LIBC_CFLAGS to disable
 # transactional memory related code in crtbegin.o.
 # This is a workaround. Better approach is have a t-* to set this flag via
@@ -539,7 +603,7 @@ ${TAR} cjf $PACKAGEDIR/$PACKAGE_NAME_NATIVE.tar.bz2   \
     $INSTALL_PACKAGE_NAME/$TARGET     \
     $INSTALL_PACKAGE_NAME/bin               \
     $INSTALL_PACKAGE_NAME/lib               \
-    $INSTALL_PACKAGE_NAME/share             
+    $INSTALL_PACKAGE_NAME/share
 rm -f $INSTALL_PACKAGE_NAME
 popd
 
