@@ -44,7 +44,6 @@ addons:
     - debhelper
     - texlive
     - texlive-extra-utils
-# - brew update && brew outdated cmake || brew upgrade cmake
 script:
  - export REV=dirty-$(git describe --always)
  - wget https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-src.tar.bz2 --no-check-certificate
@@ -61,10 +60,6 @@ script:
  - chmod +x *.sh
  - ./build-phase1.sh
  - ./build-phase2.sh
-env:
- global:
-  - TOP=$PWD
-  - PREFIX=$TOP/dist
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
