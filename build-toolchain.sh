@@ -332,7 +332,7 @@ $SRCDIR/$GCC/configure --target=$TARGET \
     ${GCC_CONFIG_OPTS}                              \
     "${GCC_CONFIG_OPTS_LCPP}"                              \
     "--with-pkgversion=$PKGVERSION" \
-    "${BRACKET}" \
+    ${BRACKET} \
     ${MULTILIB_LIST}
 
 make -j$JOBS all-gcc
