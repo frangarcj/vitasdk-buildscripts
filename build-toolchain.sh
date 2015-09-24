@@ -307,7 +307,7 @@ echo Task [III-1] /$HOST_NATIVE/gcc-first/
 rm -rf $BUILDDIR_NATIVE/gcc-first && mkdir -p $BUILDDIR_NATIVE/gcc-first
 pushd $BUILDDIR_NATIVE/gcc-first
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" $SRCDIR/$GCC/configure --host=$HOST_NATIVE \
+CFLAGS="-m32" $SRCDIR/$GCC/configure --host=$HOST_NATIVE2 \
     --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
