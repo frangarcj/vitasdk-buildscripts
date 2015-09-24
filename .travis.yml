@@ -16,7 +16,15 @@ addons:
     - g++-4.8
     - apt-src
     - scons
-    - mingw32-runtime
+    - mingw-w64
+    - gcc-mingw-w64
+    - g++-mingw-w64
+    - gcc-mingw-w64-i686
+    - gcc-mingw-w64-x86-64
+    - g++-mingw-w64-i686
+    - g++-mingw-w64-x86-64
+    - binutils-mingw-w64-i686
+    - binutils-mingw-w64-x86-64
     - p7zip-full
     - gawk
     - gzip
@@ -70,7 +78,7 @@ deploy:
   provider: releases
   api_key: $OAUTH
   file_glob: true
-  file: "pkg/*.tar.bz2"
+  file: "pkg/*"
   skip_cleanup: true
   on:
     tags: false
