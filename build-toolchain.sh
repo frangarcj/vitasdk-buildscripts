@@ -198,8 +198,8 @@ if [ "x$build_tools" == "x" ] || [ ! -d $build_tools_abs_path/python-win ] \
 fi
 
 if [ "x$is_ppa_release" != "xyes" ]; then
-  ENV_CFLAGS=" -I$BUILDDIR_NATIVE/host-libs/zlib/include -O2 "
-  ENV_CPPFLAGS=" -I$BUILDDIR_NATIVE/host-libs/zlib/include "
+  ENV_CFLAGS="-m32 -I$BUILDDIR_NATIVE/host-libs/zlib/include -O2 "
+  ENV_CPPFLAGS="-m32 -I$BUILDDIR_NATIVE/host-libs/zlib/include "
   ENV_LDFLAGS=" -L$BUILDDIR_NATIVE/host-libs/zlib/lib
                 -L$BUILDDIR_NATIVE/host-libs/usr/lib "
 
@@ -207,7 +207,7 @@ if [ "x$is_ppa_release" != "xyes" ]; then
     ENV_LDFLAGS+=" -L$build_tools_abs_path/python/lib "
   fi
 
-  GCC_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE
+  GCC_CONFIG_OPTS="-m32 --build=$BUILD --host=$HOST_NATIVE
                     --with-gmp=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpfr=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpc=$BUILDDIR_NATIVE/host-libs/usr
@@ -215,11 +215,11 @@ if [ "x$is_ppa_release" != "xyes" ]; then
                     --with-cloog=$BUILDDIR_NATIVE/host-libs/usr
                     --with-libelf=$BUILDDIR_NATIVE/host-libs/usr "
 
-  BINUTILS_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE "
+  BINUTILS_CONFIG_OPTS="-m32 --build=$BUILD --host=$HOST_NATIVE "
 
-  NEWLIB_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE "
+  NEWLIB_CONFIG_OPTS="-m32 --build=$BUILD --host=$HOST_NATIVE "
 
-  GDB_CONFIG_OPTS=" --build=$BUILD --host=$HOST_NATIVE
+  GDB_CONFIG_OPTS="-m32 --build=$BUILD --host=$HOST_NATIVE
                     --with-libexpat-prefix=$BUILDDIR_NATIVE/host-libs/usr "
 fi
 
