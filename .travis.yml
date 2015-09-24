@@ -47,6 +47,7 @@ addons:
     - tofrodos
     - texinfo
     - gcc-multilib
+    - g++-multilib 
     - libgmp3-dev
     - libmpfr-dev
     - debhelper
