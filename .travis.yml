@@ -67,8 +67,8 @@ script:
  - mv jansson-2.7 src/
  - chmod +x *.sh
  - ./build-phase1.sh
- - cat /home/travis/build/frangarcj/vitasdk-buildscripts/src/mpc-0.8.1/config.log
- - cat /home/travis/build/frangarcj/vitasdk-buildscripts/src/mpc-0.8.1/configure.log
+ - cat /home/travis/build/frangarcj/vitasdk-buildscripts/build-native/mpc/config.log
+ - cat /home/travis/build/frangarcj/vitasdk-buildscripts/build-native/mpc/configure.log
  - ./build-phase2.sh
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
