@@ -214,8 +214,9 @@ if [ "x$is_ppa_release" != "xyes" ]; then
                     --with-isl=$BUILDDIR_NATIVE/host-libs/usr
                     --with-cloog=$BUILDDIR_NATIVE/host-libs/usr
                     --with-libelf=$BUILDDIR_NATIVE/host-libs/usr "
+  HOST_NATIVE2="$host_arch"-linux-gnu
 
-  BINUTILS_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE "
+  BINUTILS_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2 "
 
   NEWLIB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE "
 
@@ -267,9 +268,8 @@ saveenv
 saveenvvar CFLAGS "-m32 $ENV_CFLAGS"
 saveenvvar CPPFLAGS "-m32 $ENV_CPPFLAGS"
 saveenvvar LDFLAGS "$ENV_LDFLAGS"
-$SRCDIR/$BINUTILS/configure  \
+CFLAGS="-m32" $SRCDIR/$BINUTILS/configure  \
     ${BINUTILS_CONFIG_OPTS} \
-    --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \

@@ -47,7 +47,7 @@ addons:
     - tofrodos
     - texinfo
     - gcc-multilib
-    - g++-multilib 
+    - g++-multilib
     - libgmp3-dev
     - libmpfr-dev
     - debhelper
@@ -68,8 +68,6 @@ script:
  - mv jansson-2.7 src/
  - chmod +x *.sh
  - ./build-phase1.sh
- - cat /home/travis/build/frangarcj/vitasdk-buildscripts/build-native/mpc/config.log
- - cat /home/travis/build/frangarcj/vitasdk-buildscripts/build-native/mpc/configure.log
  - ./build-phase2.sh
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
