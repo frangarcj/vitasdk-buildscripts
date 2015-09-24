@@ -191,7 +191,7 @@ echo Task [I-4] /$HOST_NATIVE/isl/
 rm -rf $BUILDDIR_NATIVE/isl && mkdir -p $BUILDDIR_NATIVE/isl
 pushd $BUILDDIR_NATIVE/isl
 
-$SRCDIR/$ISL/configure --build=$BUILD \
+CFLAGS="-m32" $SRCDIR/$ISL/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -208,7 +208,7 @@ echo Task [I-5] /$HOST_NATIVE/cloog/
 rm -rf $BUILDDIR_NATIVE/cloog && mkdir -p $BUILDDIR_NATIVE/cloog
 pushd $BUILDDIR_NATIVE/cloog
 
-$SRCDIR/$CLOOG/configure --build=$BUILD \
+CFLAGS="-m32" $SRCDIR/$CLOOG/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -228,7 +228,7 @@ echo Task [I-6] /$HOST_NATIVE/libelf/
 rm -rf $BUILDDIR_NATIVE/libelf && mkdir -p $BUILDDIR_NATIVE/libelf
 pushd $BUILDDIR_NATIVE/libelf
 
-$SRCDIR/$LIBELF/configure --build=$BUILD \
+CFLAGS="-m32" $SRCDIR/$LIBELF/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -244,7 +244,7 @@ echo Task [I-7] /$HOST_NATIVE/expat/
 rm -rf $BUILDDIR_NATIVE/expat && mkdir -p $BUILDDIR_NATIVE/expat
 pushd $BUILDDIR_NATIVE/expat
 
-$SRCDIR/$EXPAT/configure --build=$BUILD \
+CFLAGS="-m32" $SRCDIR/$EXPAT/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
