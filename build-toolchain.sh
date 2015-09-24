@@ -238,12 +238,12 @@ rm -rf $BUILDDIR_NATIVE/vita-toolchain && mkdir -p $BUILDDIR_NATIVE/vita-toolcha
 pushd $BUILDDIR_NATIVE/vita-toolchain
 mkdir install
 mkdir build-jansson && cd build-jansson
-$SRCDIR/$JANSSON/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
+CFLAGS="-m32" $SRCDIR/$JANSSON/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
 make
 make install
 cd ..
 mkdir build-libelf && cd build-libelf
-$SRCDIR/$LIBELF/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
+CFLAGS="-m32" $SRCDIR/$LIBELF/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
 make
 make install
 cd ..
