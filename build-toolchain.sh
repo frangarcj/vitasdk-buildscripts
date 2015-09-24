@@ -220,7 +220,7 @@ if [ "x$is_ppa_release" != "xyes" ]; then
 
   NEWLIB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE "
 
-  GDB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE
+  GDB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2
                     --with-libexpat-prefix=$BUILDDIR_NATIVE/host-libs/usr "
 fi
 

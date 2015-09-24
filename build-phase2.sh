@@ -4,7 +4,7 @@ set -e
 
 export PING_SLEEP=30s
 export WORKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-export BUILD_OUTPUT=$WORKDIR/build.out
+export BUILD_OUTPUT=$WORKDIR/build2.out
 
 touch $BUILD_OUTPUT
 
@@ -31,7 +31,7 @@ PING_LOOP_PID=$!
 ./build-toolchain.sh >> $BUILD_OUTPUT 2>&1
 
 # The build finished without returning an error so dump a tail of the output
-dump_output
+#dump_output
 
 # nicely terminate the ping output loop
 kill $PING_LOOP_PID
