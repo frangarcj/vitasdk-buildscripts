@@ -269,6 +269,7 @@ saveenvvar CPPFLAGS "-m32 $ENV_CPPFLAGS"
 saveenvvar LDFLAGS "$ENV_LDFLAGS"
 $SRCDIR/$BINUTILS/configure  \
     ${BINUTILS_CONFIG_OPTS} \
+    --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
@@ -306,7 +307,8 @@ echo Task [III-1] /$HOST_NATIVE/gcc-first/
 rm -rf $BUILDDIR_NATIVE/gcc-first && mkdir -p $BUILDDIR_NATIVE/gcc-first
 pushd $BUILDDIR_NATIVE/gcc-first
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
+CFLAGS="-m32" $SRCDIR/$GCC/configure --host=$HOST_NATIVE \
+    --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
