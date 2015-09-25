@@ -247,7 +247,7 @@ clean_env
 ROOT=`pwd`
 SRCDIR=$ROOT/src
 
-M32=$(M32)
+M32="$(M32)"
 
 BUILDDIR_NATIVE=$ROOT/build-native
 BUILDDIR_MINGW=$ROOT/build-mingw
