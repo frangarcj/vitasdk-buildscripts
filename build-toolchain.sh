@@ -207,6 +207,8 @@ if [ "x$is_ppa_release" != "xyes" ]; then
     ENV_LDFLAGS+=" -L$build_tools_abs_path/python/lib "
   fi
 
+  HOST_NATIVE2="$host_arch"-linux-gnu
+
   GCC_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2
                     --with-gmp=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpfr=$BUILDDIR_NATIVE/host-libs/usr
@@ -214,7 +216,6 @@ if [ "x$is_ppa_release" != "xyes" ]; then
                     --with-isl=$BUILDDIR_NATIVE/host-libs/usr
                     --with-cloog=$BUILDDIR_NATIVE/host-libs/usr
                     --with-libelf=$BUILDDIR_NATIVE/host-libs/usr "
-  HOST_NATIVE2="$host_arch"-linux-gnu
 
   BINUTILS_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2 "
 
