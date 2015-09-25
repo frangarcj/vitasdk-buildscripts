@@ -206,8 +206,11 @@ if [ "x$is_ppa_release" != "xyes" ]; then
   if [ "x$build_tools" != "x" ] && [ -d $build_tools_abs_path/python ]; then
     ENV_LDFLAGS+=" -L$build_tools_abs_path/python/lib "
   fi
-
-  HOST_NATIVE2="$host_arch"-linux-gnu
+  if [ "x$BRACKET" != "xyes" ]; then
+    HOST_NATIVE2="$host_arch"-linux-gnu
+  else
+    HOST_NATIVE2=x86_64-apple-darwin10
+  fi
 
   GCC_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2
                     --with-gmp=$BUILDDIR_NATIVE/host-libs/usr
