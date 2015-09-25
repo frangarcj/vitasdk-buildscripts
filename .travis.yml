@@ -2,7 +2,7 @@ os:
   - linux
   - osx
 env:
-  - M32=
+  - M32=" "
   - M32="-m32"
 matrix:
   exclude:
