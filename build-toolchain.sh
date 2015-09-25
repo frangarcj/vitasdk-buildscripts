@@ -207,7 +207,7 @@ if [ "x$is_ppa_release" != "xyes" ]; then
     ENV_LDFLAGS+=" -L$build_tools_abs_path/python/lib "
   fi
 
-  GCC_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE
+  GCC_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2
                     --with-gmp=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpfr=$BUILDDIR_NATIVE/host-libs/usr
                     --with-mpc=$BUILDDIR_NATIVE/host-libs/usr
@@ -218,7 +218,7 @@ if [ "x$is_ppa_release" != "xyes" ]; then
 
   BINUTILS_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2 "
 
-  NEWLIB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE "
+  NEWLIB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2 "
 
   GDB_CONFIG_OPTS="--build=$BUILD --host=$HOST_NATIVE2
                     --with-libexpat-prefix=$BUILDDIR_NATIVE/host-libs/usr "
@@ -307,8 +307,7 @@ echo Task [III-1] /$HOST_NATIVE/gcc-first/
 rm -rf $BUILDDIR_NATIVE/gcc-first && mkdir -p $BUILDDIR_NATIVE/gcc-first
 pushd $BUILDDIR_NATIVE/gcc-first
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" $SRCDIR/$GCC/configure --host=$HOST_NATIVE2 \
-    --target=$TARGET \
+CFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
