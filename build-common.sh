@@ -242,12 +242,12 @@ copy_multi_libs() {
 }
 
 # Clean up unnecessary global shell variables
+M32="$(M32)"
+
 clean_env
 
 ROOT=`pwd`
 SRCDIR=$ROOT/src
-
-M32="$(M32)"
 
 BUILDDIR_NATIVE=$ROOT/build-native
 BUILDDIR_MINGW=$ROOT/build-mingw
