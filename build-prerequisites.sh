@@ -115,6 +115,9 @@ fi
 if [ "x$BUILD" == "xx86_64-apple-darwin10" ]; then
   skip_mingw32=yes
 fi
+if [ "x$M32" == "x-m32" ] ; then
+  skip_mingw32=yes
+fi
 
 rm -rf $BUILDDIR_NATIVE && mkdir -p $BUILDDIR_NATIVE
 rm -rf $INSTALLDIR_NATIVE && mkdir -p $INSTALLDIR_NATIVE
