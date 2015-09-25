@@ -69,6 +69,7 @@ script:
  - chmod +x *.sh
  - ./build-phase1.sh
  - ./build-phase2.sh
+ - cat /home/travis/build/frangarcj/vitasdk-buildscripts/build-native/gcc-final/arm-vita-eabi/libgcc/config.log
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
