@@ -188,6 +188,10 @@ if [ "x$BUILD" == "xx86_64-apple-darwin10" ] || [ "x$is_ppa_release" == "xyes" ]
     skip_mingw32=yes
     skip_mingw32_gdb_with_python=yes
 fi
+if [ "x$M32" == "x-m32" ] ; then
+    skip_mingw32=yes
+    skip_mingw32_gdb_with_python=yes
+fi
 
 #Building mingw gdb with python support requires python windows package and
 #a special config file. If any of them is missing, we skip the build of
