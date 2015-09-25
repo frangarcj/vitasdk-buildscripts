@@ -96,7 +96,8 @@ clean_env () {
             USER|\
             USERNAME|\
             com.apple.*|\
-            XAUTHORITY)
+            XAUTHORITY|\
+            M32)
             ;;
         *)
             unset $var
@@ -242,8 +243,6 @@ copy_multi_libs() {
 }
 
 # Clean up unnecessary global shell variables
-M32="$(M32)"
-
 clean_env
 
 ROOT=`pwd`
