@@ -308,7 +308,7 @@ echo Task [III-1] /$HOST_NATIVE/gcc-first/
 rm -rf $BUILDDIR_NATIVE/gcc-first && mkdir -p $BUILDDIR_NATIVE/gcc-first
 pushd $BUILDDIR_NATIVE/gcc-first
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" CPPFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
+CFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
@@ -336,6 +336,7 @@ CFLAGS="-m32" CPPFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$T
     ${GCC_CONFIG_OPTS}                              \
     "${GCC_CONFIG_OPTS_LCPP}"                              \
     "--with-pkgversion=$PKGVERSION" \
+    CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" \
     ${MULTILIB_LIST}
 else
 $SRCDIR/$GCC/configure --target=$TARGET \
@@ -432,7 +433,7 @@ rm -rf $BUILDDIR_NATIVE/gcc-final && mkdir -p $BUILDDIR_NATIVE/gcc-final
 pushd $BUILDDIR_NATIVE/gcc-final
 
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" CPPFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
+CFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
@@ -460,6 +461,7 @@ CFLAGS="-m32" CPPFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$T
     --with-sysroot=$INSTALLDIR_NATIVE/$TARGET \
     $GCC_CONFIG_OPTS                                \
     "${GCC_CONFIG_OPTS_LCPP}"                              \
+    CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2" \
     "--with-pkgversion=$PKGVERSION" \
     ${MULTILIB_LIST}
 else
