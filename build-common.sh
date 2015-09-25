@@ -339,15 +339,16 @@ if [ "x$uname_string" == "xlinux" ] ; then
     BUILD="$host_arch"-linux-gnu
     if [ "x$M32" == "x-m32" ] ; then
     HOST_NATIVE=i686-pc-linux-gnu
+    PACKAGE_NAME_SUFFIX=linux32
     else
     HOST_NATIVE="$host_arch"-linux-gnu
+    PACKAGE_NAME_SUFFIX=linux
     fi
     READLINK=readlink
     JOBS=`grep ^processor /proc/cpuinfo|wc -l`
     GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
     TAR=tar
     MD5="md5sum -b"
-    PACKAGE_NAME_SUFFIX=linux
     BRACKET=''
 elif [ "x$uname_string" == "xdarwin" ] ; then
     BUILD=x86_64-apple-darwin10
