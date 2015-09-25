@@ -336,10 +336,13 @@ uname_string=`uname | sed 'y/LINUXDARWIN/linuxdarwin/'`
 host_arch=`uname -m | sed 'y/XI/xi/'`
 if [ "x$uname_string" == "xlinux" ] ; then
     BUILD="$host_arch"-linux-gnu
+    if [ "x$M32" == "x-m32" ] ; then
     HOST_NATIVE=i686-pc-linux-gnu
+    else
+    HOST_NATIVE="$host_arch"-linux-gnu
+    fi
     READLINK=readlink
-#    JOBS=`grep ^processor /proc/cpuinfo|wc -l`
-    JOBS=1
+    JOBS=`grep ^processor /proc/cpuinfo|wc -l`
     GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
     TAR=tar
     MD5="md5sum -b"

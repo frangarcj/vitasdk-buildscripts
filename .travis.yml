@@ -1,6 +1,13 @@
 os:
   - linux
   - osx
+env:
+  - M32=
+  - M32="-m32"
+matrix:
+  exclude:
+    - os: osx
+      env: M32="-m32"
 
 compiler:
     - clang
@@ -12,8 +19,6 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - gcc-4.8
-    - g++-4.8
     - apt-src
     - scons
     - mingw-w64
@@ -69,7 +74,6 @@ script:
  - chmod +x *.sh
  - ./build-phase1.sh
  - ./build-phase2.sh
- - cat /home/travis/build/frangarcj/vitasdk-buildscripts/build-native/gcc-final/arm-vita-eabi/libgcc/config.log
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
@@ -85,7 +89,6 @@ deploy:
   on:
     tags: false
     all_branches: true
-
 branches:
   except:
     - /^*-v[0-9]/

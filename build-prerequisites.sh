@@ -131,7 +131,7 @@ rm -rf $BUILDDIR_NATIVE/zlib
 copy_dir_clean $SRCDIR/$ZLIB $BUILDDIR_NATIVE/zlib
 pushd $BUILDDIR_NATIVE/zlib
 #install zlib at .../host-libs/zlib, prevent gcc from linking into this external zlib
-CFLAGS="-m32" $SRCDIR/$ZLIB/configure --static --prefix=$BUILDDIR_NATIVE/host-libs/zlib
+CFLAGS="$M32" $SRCDIR/$ZLIB/configure --static --prefix=$BUILDDIR_NATIVE/host-libs/zlib
 make
 make install
 popd
@@ -140,7 +140,7 @@ echo Task [I-1] /$HOST_NATIVE/gmp/
 rm -rf $BUILDDIR_NATIVE/gmp && mkdir -p $BUILDDIR_NATIVE/gmp
 pushd $BUILDDIR_NATIVE/gmp
 
-CPPFLAGS="-m32 -fexceptions" $SRCDIR/$GMP/configure --build=$BUILD \
+CPPFLAGS="$M32 -fexceptions" $SRCDIR/$GMP/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
     --enable-cxx \
@@ -156,7 +156,7 @@ echo Task [I-2] /$HOST_NATIVE/mpfr/
 rm -rf $BUILDDIR_NATIVE/mpfr && mkdir -p $BUILDDIR_NATIVE/mpfr
 pushd $BUILDDIR_NATIVE/mpfr
 
-CPPFLAGS="-m32 -fexceptions" $SRCDIR/$MPFR/configure --build=$BUILD \
+CPPFLAGS="$M32 -fexceptions" $SRCDIR/$MPFR/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -191,7 +191,7 @@ echo Task [I-4] /$HOST_NATIVE/isl/
 rm -rf $BUILDDIR_NATIVE/isl && mkdir -p $BUILDDIR_NATIVE/isl
 pushd $BUILDDIR_NATIVE/isl
 
-CFLAGS="-m32" $SRCDIR/$ISL/configure --build=$BUILD \
+CFLAGS="$M32" $SRCDIR/$ISL/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -208,7 +208,7 @@ echo Task [I-5] /$HOST_NATIVE/cloog/
 rm -rf $BUILDDIR_NATIVE/cloog && mkdir -p $BUILDDIR_NATIVE/cloog
 pushd $BUILDDIR_NATIVE/cloog
 
-CFLAGS="-m32" $SRCDIR/$CLOOG/configure --build=$BUILD \
+CFLAGS="$M32" $SRCDIR/$CLOOG/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -228,7 +228,7 @@ echo Task [I-6] /$HOST_NATIVE/libelf/
 rm -rf $BUILDDIR_NATIVE/libelf && mkdir -p $BUILDDIR_NATIVE/libelf
 pushd $BUILDDIR_NATIVE/libelf
 
-CFLAGS="-m32" $SRCDIR/$LIBELF/configure --build=$BUILD \
+CFLAGS="$M32" $SRCDIR/$LIBELF/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \
@@ -244,7 +244,7 @@ echo Task [I-7] /$HOST_NATIVE/expat/
 rm -rf $BUILDDIR_NATIVE/expat && mkdir -p $BUILDDIR_NATIVE/expat
 pushd $BUILDDIR_NATIVE/expat
 
-CFLAGS="-m32" $SRCDIR/$EXPAT/configure --build=$BUILD \
+CFLAGS="$M32" $SRCDIR/$EXPAT/configure --build=$BUILD \
     --host=$HOST_NATIVE \
     --target=$TARGET \
     --prefix=$BUILDDIR_NATIVE/host-libs/usr \

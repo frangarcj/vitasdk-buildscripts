@@ -198,8 +198,8 @@ if [ "x$build_tools" == "x" ] || [ ! -d $build_tools_abs_path/python-win ] \
 fi
 
 if [ "x$is_ppa_release" != "xyes" ]; then
-  ENV_CFLAGS="-m32 -I$BUILDDIR_NATIVE/host-libs/zlib/include -O2 "
-  ENV_CPPFLAGS="-m32 -I$BUILDDIR_NATIVE/host-libs/zlib/include "
+  ENV_CFLAGS="$M32 -I$BUILDDIR_NATIVE/host-libs/zlib/include -O2 "
+  ENV_CPPFLAGS="$M32 -I$BUILDDIR_NATIVE/host-libs/zlib/include "
   ENV_LDFLAGS=" -L$BUILDDIR_NATIVE/host-libs/zlib/lib
                 -L$BUILDDIR_NATIVE/host-libs/usr/lib "
 
@@ -240,17 +240,17 @@ rm -rf $BUILDDIR_NATIVE/vita-toolchain && mkdir -p $BUILDDIR_NATIVE/vita-toolcha
 pushd $BUILDDIR_NATIVE/vita-toolchain
 mkdir install
 mkdir build-jansson && cd build-jansson
-CFLAGS="-m32" $SRCDIR/$JANSSON/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
+CFLAGS="$M32" $SRCDIR/$JANSSON/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
 make
 make install
 cd ..
 mkdir build-libelf && cd build-libelf
-CFLAGS="-m32" $SRCDIR/$LIBELF/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
+CFLAGS="$M32" $SRCDIR/$LIBELF/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
 make
 make install
 cd ..
 mkdir build-vita-toolchain && cd build-vita-toolchain
-CFLAGS="-m32" cmake $SRCDIR/$VITA_TOOLCHAIN \
+CFLAGS="$M32" cmake $SRCDIR/$VITA_TOOLCHAIN \
 	-DJansson_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/include/ \
 	-DJansson_LIBRARY=$BUILDDIR_NATIVE/vita-toolchain/install/lib/libjansson.a \
 	-Dlibelf_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/include/ \
@@ -266,10 +266,10 @@ echo Task [III-0] /$HOST_NATIVE/binutils/
 rm -rf $BUILDDIR_NATIVE/binutils && mkdir -p $BUILDDIR_NATIVE/binutils
 pushd $BUILDDIR_NATIVE/binutils
 saveenv
-saveenvvar CFLAGS "-m32 $ENV_CFLAGS"
-saveenvvar CPPFLAGS "-m32 $ENV_CPPFLAGS"
+saveenvvar CFLAGS "$M32 $ENV_CFLAGS"
+saveenvvar CPPFLAGS "$M32 $ENV_CPPFLAGS"
 saveenvvar LDFLAGS "$ENV_LDFLAGS"
-CFLAGS="-m32" $SRCDIR/$BINUTILS/configure  \
+CFLAGS="$M32" $SRCDIR/$BINUTILS/configure  \
     ${BINUTILS_CONFIG_OPTS} \
     --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
@@ -285,7 +285,7 @@ CFLAGS="-m32" $SRCDIR/$BINUTILS/configure  \
     "--with-pkgversion=$PKGVERSION"
 
 if [ "x$DEBUG_BUILD_OPTIONS" != "x" ] ; then
-    make CFLAGS="-m32 -I$BUILDDIR_NATIVE/host-libs/zlib/include $DEBUG_BUILD_OPTIONS" -j$JOBS
+    make CFLAGS="$M32 -I$BUILDDIR_NATIVE/host-libs/zlib/include $DEBUG_BUILD_OPTIONS" -j$JOBS
 else
     make -j$JOBS
 fi
@@ -308,7 +308,7 @@ echo Task [III-1] /$HOST_NATIVE/gcc-first/
 rm -rf $BUILDDIR_NATIVE/gcc-first && mkdir -p $BUILDDIR_NATIVE/gcc-first
 pushd $BUILDDIR_NATIVE/gcc-first
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
+CFLAGS="$M32" CXXFLAGS="$M32" $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
@@ -433,7 +433,7 @@ rm -rf $BUILDDIR_NATIVE/gcc-final && mkdir -p $BUILDDIR_NATIVE/gcc-final
 pushd $BUILDDIR_NATIVE/gcc-final
 
 if [ "x$BRACKET" != "xyes" ]; then
-CFLAGS="-m32" CXXFLAGS="-m32" $SRCDIR/$GCC/configure --target=$TARGET \
+CFLAGS="$M32" CXXFLAGS="$M32" $SRCDIR/$GCC/configure --target=$TARGET \
     --prefix=$INSTALLDIR_NATIVE \
     --libexecdir=$INSTALLDIR_NATIVE/lib \
     --infodir=$INSTALLDIR_NATIVE_DOC/info \
