@@ -8,5 +8,5 @@
 	path = src/vita-toolchain
 	url = https://github.com/vitasdk/vita-toolchain.git
 [submodule "src/pthread-embedded"]
-	path = src/vita-toolchain
+	path = src/pthread-embedded
 	url = https://github.com/vitasdk/pthread-embedded.git
