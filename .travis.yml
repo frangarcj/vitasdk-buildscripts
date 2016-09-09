@@ -22,13 +22,13 @@ script:
  - cd src/
  - find . -name '*.tar.*' | xargs -I% tar -xf %
  - cd ..
- - patch -p1 < vita.patch
  - wget http://www.digip.org/jansson/releases/jansson-2.7.tar.gz --no-check-certificate
  - tar xf jansson-2.7.tar.gz
  - mv jansson-2.7 src/
  - wget http://nih.at/libzip/libzip-1.1.3.tar.gz --no-check-certificate
  - tar xf libzip-1.1.3.tar.gz
  - mv libzip-1.1.3 src/
+ - patch -p1 < vita.patch
  - chmod +x *.sh
  - ./build-prerequisites.sh
  - ./build-toolchain.sh
