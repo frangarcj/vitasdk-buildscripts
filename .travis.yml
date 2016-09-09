@@ -37,7 +37,7 @@ before_deploy:
   - git config --global user.name "Travis CI"
   - export GIT_TAG=$TRAVIS_BRANCH-0.1-v$TRAVIS_BUILD_NUMBER
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"; fi
-  - then git push -q https://$TAGPERM@github.com/frangarcj/vitasdk-buildscripts --tags; fi
+  - git push -q https://$TAGPERM@github.com/frangarcj/vitasdk-buildscripts --tags; fi
 deploy:
   provider: releases
   api_key: $OAUTH
