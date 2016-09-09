@@ -30,8 +30,8 @@ script:
  - mv libzip-1.1.3 src/
  - patch -p1 < vita.patch
  - chmod +x *.sh
- - ./build-prerequisites.sh
- - ./build-toolchain.sh
+ - ./build-phase1.sh
+ - ./build-phase2.sh
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
