@@ -8,7 +8,7 @@ matrix:
       env: M32="-m32"
 
 compiler:
-    - clang
+    - apple-gcc42
 
 language: cpp
 
