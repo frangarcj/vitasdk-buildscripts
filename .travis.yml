@@ -1,9 +1,7 @@
 os:
-  - linux
   - osx
 env:
-  - M32=" " 
-  - M32="-m32"
+  - M32=" "
 matrix:
   exclude:
     - os: osx
@@ -15,65 +13,25 @@ compiler:
 language: cpp
 
 addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - apt-src
-    - scons
-    - mingw-w64
-    - gcc-mingw-w64
-    - g++-mingw-w64
-    - gcc-mingw-w64-i686
-    - gcc-mingw-w64-x86-64
-    - g++-mingw-w64-i686
-    - g++-mingw-w64-x86-64
-    - binutils-mingw-w64-i686
-    - binutils-mingw-w64-x86-64
-    - p7zip-full
-    - gawk
-    - gzip
-    - perl
-    - autoconf
-    - m4
-    - automake
-    - libtool
-    - libncurses5-dev
-    - gettext
-    - gperf
-    - dejagnu
-    - expect
-    - tcl
-    - autogen
-    - guile-1.6
-    - flex
-    - flip
-    - bison
-    - tofrodos
-    - texinfo
-    - gcc-multilib
-    - g++-multilib
-    - libgmp3-dev
-    - libmpfr-dev
-    - debhelper
-    - texlive
-    - texlive-extra-utils
 script:
  - export REV=dirty-$(git describe --always)
- - wget https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q2-update/+download/gcc-arm-none-eabi-4_9-2015q2-20150609-src.tar.bz2 --no-check-certificate
- - tar xjf gcc-arm-none-eabi-4_9-2015q2-20150609-src.tar.bz2
- - mv gcc-arm-none-eabi-4_9-2015q2-20150609/src/* ./src/
+ - wget https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-src.tar.bz2 --no-check-certificate
+ - tar xjf gcc-arm-none-eabi-4_9-2015q3-20150921-src.tar.bz2
+ - mv gcc-arm-none-eabi-4_9-2015q3-20150921/src/* ./src/
  - rm src/newlib.tar.bz2
  - cd src/
  - find . -name '*.tar.*' | xargs -I% tar -xf %
- - patch -p0 < ../vita.patch
  - cd ..
+ - patch -p1 < ../vita.patch
  - wget http://www.digip.org/jansson/releases/jansson-2.7.tar.gz --no-check-certificate
  - tar xf jansson-2.7.tar.gz
  - mv jansson-2.7 src/
+ - wget http://nih.at/libzip/libzip-1.1.3.tar.gz --no-check-certificate
+ - tar xf 1.1.3.tar.gz
+ - mv libzip-1.1.3 src/
  - chmod +x *.sh
- - ./build-phase1.sh
- - ./build-phase2.sh
+ - ./build-prerequisites.sh
+ - ./build-toolchain.sh
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"

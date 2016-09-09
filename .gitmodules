@@ -1,9 +1,12 @@
 [submodule "src/newlib"]
 	path = src/newlib
-	url = https://github.com/frangarcj/vita-newlib.git
+	url = https://github.com/vitasdk/newlib.git
 [submodule "src/vita-headers"]
 	path = src/vita-headers
 	url = https://github.com/vitasdk/vita-headers.git
 [submodule "src/vita-toolchain"]
 	path = src/vita-toolchain
 	url = https://github.com/vitasdk/vita-toolchain.git
+[submodule "src/pthread-embedded"]
+	path = src/vita-toolchain
+	url = https://github.com/vitasdk/pthread-embedded.git
