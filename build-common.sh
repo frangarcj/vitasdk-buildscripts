@@ -277,8 +277,10 @@ SAMPLES=samples
 BUILD_MANUAL=build-manual
 JANSSON=jansson-2.7
 LIBELF=libelf-0.8.13
+LIBZIP=libzip-1.1.3
 VITA_TOOLCHAIN=vita-toolchain
 VITA_HEADERS=vita-headers
+PTHREAD_EMBEDDED=pthread-embedded
 
 CLOOG_PACK=$CLOOG.tar.gz
 EXPAT_PACK=$EXPAT.tar.gz
@@ -333,7 +335,7 @@ BUGURL=""
 
 # Set variables according to real environment to make this script can run
 # on Ubuntu and Mac OS X.
-uname_string=`uname | sed 'y/LINUXDARWIN/linuxdarwin/'`
+uname_string=`uname | sed 'y/LINUXDARWINFREEOPENPCBSD/linuxdarwinfreeopenpcbsd/'`
 host_arch=`uname -m | sed 'y/XI/xi/'`
 if [ "x$uname_string" == "xlinux" ] ; then
     BUILD="$host_arch"-linux-gnu
@@ -349,7 +351,16 @@ if [ "x$uname_string" == "xlinux" ] ; then
     GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
     TAR=tar
     MD5="md5sum -b"
-    BRACKET=''
+    PACKAGE_NAME_SUFFIX=linux
+elif [ "x$uname_string" == "xfreebsd" ] ; then
+    BUILD="$host_arch"-freebsd
+    HOST_NATIVE="$host_arch"-freebsd
+    READLINK=readlink
+    JOBS=`sysctl kern.smp.cpus | sed 's/kern.smp.cpus: //'`
+    GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
+    TAR=gtar
+    MD5="md5 -r"
+    PACKAGE_NAME_SUFFIX=freebsd
 elif [ "x$uname_string" == "xdarwin" ] ; then
     BUILD=x86_64-apple-darwin10
     HOST_NATIVE=x86_64-apple-darwin10
@@ -374,4 +385,4 @@ PACKAGE_NAME_MINGW=$PACKAGE_NAME-win32
 INSTALL_PACKAGE_NAME=gcc-$TARGET-$GCC_VER_NAME-$RELEASEVER
 INSTALLBASE="GNU Tools ARM Embedded"
 APPNAME="$PKGVERSION $GCC_VER_SHORT $release_year"
-DEFAULT_JSON="-DDEFAULT_JSON=../share/db.json:../share/extra.json"
+DEFAULT_JSON="-DDEFAULT_JSON=../share/db.json"

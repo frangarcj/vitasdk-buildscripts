@@ -256,12 +256,27 @@ CFLAGS="$M32" $SRCDIR/$LIBELF/configure --disable-shared --enable-static --prefi
 make
 make install
 cd ..
+mkdir build-zlib && cd build-zlib
+cmake $SRCDIR/$ZLIB -DCMAKE_INSTALL_PREFIX=$BUILDDIR_NATIVE/vita-toolchain/install
+make
+make install
+cd ..
+mkdir build-libzip && cd build-libzip
+$SRCDIR/$LIBZIP/configure --disable-shared --enable-static --prefix=$BUILDDIR_NATIVE/vita-toolchain/install
+make
+make install
+cd ..
 mkdir build-vita-toolchain && cd build-vita-toolchain
 CFLAGS="$M32" cmake $SRCDIR/$VITA_TOOLCHAIN \
 	-DJansson_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/include/ \
 	-DJansson_LIBRARY=$BUILDDIR_NATIVE/vita-toolchain/install/lib/libjansson.a \
 	-Dlibelf_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/include/ \
 	-Dlibelf_LIBRARY=$BUILDDIR_NATIVE/vita-toolchain/install/lib/libelf.a \
+	-Dzlib_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/include/ \
+	-Dzlib_LIBRARY=$BUILDDIR_NATIVE/vita-toolchain/install/lib/libz.a \
+	-Dlibzip_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/include/ \
+	-Dlibzip_CONFIG_INCLUDE_DIR=$BUILDDIR_NATIVE/vita-toolchain/install/lib/libzip/include/ \
+	-Dlibzip_LIBRARY=$BUILDDIR_NATIVE/vita-toolchain/install/lib/libzip.a \
 	-DUSE_BUNDLED_ENDIAN_H=ON \
 	-DCMAKE_INSTALL_PREFIX=$INSTALLDIR_NATIVE \
 	$DEFAULT_JSON
@@ -322,7 +337,7 @@ CFLAGS="$M32" CXXFLAGS="$M32" $SRCDIR/$GCC/configure --target=$TARGET \
     --mandir=$INSTALLDIR_NATIVE_DOC/man \
     --htmldir=$INSTALLDIR_NATIVE_DOC/html \
     --pdfdir=$INSTALLDIR_NATIVE_DOC/pdf \
-    --enable-languages=c \
+    --enable-languages=c,c++ \
     --disable-decimal-float \
     --disable-libffi \
     --disable-libgomp \
@@ -390,6 +405,17 @@ rm -rf ./lib/libiberty.a
 rmdir include
 popd
 
+echo Task [Vita-1]: Deploy headers/generate libs
+rm -rf $BUILDDIR_NATIVE/vitalibs && mkdir -p $BUILDDIR_NATIVE/vitalibs
+pushd $BUILDDIR_NATIVE/vitalibs
+$INSTALLDIR_NATIVE/bin/vita-libs-gen $SRCDIR/$VITA_HEADERS/db.json .
+make ARCH=$INSTALLDIR_NATIVE/bin/arm-vita-eabi
+cp *.a $INSTALLDIR_NATIVE/arm-vita-eabi/lib/
+cp -r $SRCDIR/$VITA_HEADERS/include $INSTALLDIR_NATIVE/arm-vita-eabi/
+mkdir -p $INSTALLDIR_NATIVE/share
+cp $SRCDIR/$VITA_HEADERS/db.json $INSTALLDIR_NATIVE/share
+popd
+
 echo Task [III-2] /$HOST_NATIVE/newlib/
 saveenv
 prepend_path PATH $INSTALLDIR_NATIVE/bin
@@ -429,6 +455,23 @@ fi
 popd
 restoreenv
 
+echo Task [Vita-2]: Build pthread-embedded
+saveenv
+prepend_path PATH $INSTALLDIR_NATIVE/bin
+saveenvvar CFLAGS_FOR_TARGET '-g -O2 -ffunction-sections -fdata-sections'
+rm -rf $BUILDDIR_NATIVE/$PTHREAD_EMBEDDED && mkdir -p $BUILDDIR_NATIVE/$PTHREAD_EMBEDDED
+pushd $BUILDDIR_NATIVE/$PTHREAD_EMBEDDED
+cp -R $SRCDIR/$PTHREAD_EMBEDDED/* .
+popd
+pushd $BUILDDIR_NATIVE/$PTHREAD_EMBEDDED/platform/vita
+
+saveenvvar PREFIX $INSTALLDIR_NATIVE/$TARGET
+make
+make install
+
+popd
+restoreenv
+
 echo Task [III-3] /$HOST_NATIVE/newlib-nano/
 echo [Vita] Skipped
 
@@ -449,6 +492,7 @@ CFLAGS="$M32" CXXFLAGS="$M32" $SRCDIR/$GCC/configure --target=$TARGET \
     --pdfdir=$INSTALLDIR_NATIVE_DOC/pdf \
     --enable-languages=c,c++ \
     --enable-plugins \
+    --enable-threads=posix \
     --disable-decimal-float \
     --disable-libffi \
     --disable-libgomp \
@@ -458,7 +502,6 @@ CFLAGS="$M32" CXXFLAGS="$M32" $SRCDIR/$GCC/configure --target=$TARGET \
     --disable-libstdcxx-pch \
     --disable-nls \
     --disable-shared \
-    --disable-threads \
     --disable-tls \
     --with-gnu-as \
     --with-gnu-ld \
@@ -534,17 +577,6 @@ popd
 rm -f $INSTALLDIR_NATIVE/$TARGET/usr
 popd
 
-echo Task [Vita-1]: Deploy headers/generate libs
-rm -rf $BUILDDIR_NATIVE/vitalibs && mkdir -p $BUILDDIR_NATIVE/vitalibs
-pushd $BUILDDIR_NATIVE/vitalibs
-$INSTALLDIR_NATIVE/bin/vita-libs-gen $SRCDIR/$VITA_HEADERS/db.json $SRCDIR/$VITA_HEADERS/extra.json .
-make ARCH=$INSTALLDIR_NATIVE/bin/arm-vita-eabi
-cp *.a $INSTALLDIR_NATIVE/arm-vita-eabi/lib/
-cp -r $SRCDIR/$VITA_HEADERS/include $INSTALLDIR_NATIVE/arm-vita-eabi/
-mkdir -p $INSTALLDIR_NATIVE/share
-cp $SRCDIR/$VITA_HEADERS/db.json $SRCDIR/$VITA_HEADERS/extra.json $INSTALLDIR_NATIVE/share
-popd
-
 echo Task [III-5] /$HOST_NATIVE/gcc-size-libstdcxx/
 echo [Vita] Skipped
 
@@ -567,7 +599,13 @@ if [ "x$DEBUG_BUILD_OPTIONS" = "x" ] ; then
         strip_binary strip $bin
     done
 
-    STRIP_BINARIES=`find $INSTALLDIR_NATIVE/lib/gcc/$TARGET/$GCC_VER/ -maxdepth 1 -name \* -perm +111 -and ! -type d`
+    case "$OSTYPE" in
+      darwin*)  PERM="+111" ;;
+      freebsd*) PERM="+111" ;;
+      *)        PERM="/111" ;;
+    esac
+
+    STRIP_BINARIES=`find $INSTALLDIR_NATIVE/lib/gcc/$TARGET/$GCC_VER/ -maxdepth 1 -name \* -perm $PERM -and ! -type d`
     for bin in $STRIP_BINARIES ; do
         strip_binary strip $bin
     done
@@ -650,6 +688,7 @@ $SRCDIR/$JANSSON/configure --disable-shared --enable-static --build=$BUILD --hos
 make
 make install
 cd ..
+
 mkdir build-libelf && cd build-libelf
 # need to explicitly specify CC because configure script is broken
 CC=$HOST_MINGW-gcc $SRCDIR/$LIBELF/configure --disable-shared --enable-static --build=$BUILD --host=$HOST_MINGW --prefix=$BUILDDIR_MINGW/vita-toolchain/install
@@ -658,13 +697,33 @@ make install
 # need to run ranlib manually
 $HOST_MINGW-ranlib $BUILDDIR_MINGW/vita-toolchain/install/lib/libelf.a
 cd ..
+
+mkdir build-zlib && cd build-zlib
+cmake $SRCDIR/$ZLIB -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/mingw-toolchain.cmake -DCMAKE_INSTALL_PREFIX=$BUILDDIR_MINGW/vita-toolchain/install
+make
+make install
+cp $BUILDDIR_MINGW/vita-toolchain/install/lib/libzlibstatic.a $BUILDDIR_MINGW/vita-toolchain/install/lib/libz.a
+cd ..
+
+mkdir build-libzip && cd build-libzip
+cmake $SRCDIR/$LIBZIP -DCMAKE_C_FLAGS="-DZIP_STATIC" -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/mingw-toolchain.cmake -DZLIB_ROOT=$BUILDDIR_MINGW/vita-toolchain/install/ -DZLIB_INCLUDE_DIR=$BUILDDIR_MINGW/vita-toolchain/install/include -DZLIB_LIBRARY=$BUILDDIR_MINGW/vita-toolchain/install/lib/libz.a -DCMAKE_INSTALL_PREFIX=$BUILDDIR_MINGW/vita-toolchain/install
+make
+make install
+cd ..
+
 mkdir build-vita-toolchain && cd build-vita-toolchain
 cmake $SRCDIR/$VITA_TOOLCHAIN \
-	-DCMAKE_TOOLCHAIN_FILE=$SRCDIR/mingw-toolchain.cmake \
+        -DZIP_STATIC=ON \
+        -DCMAKE_TOOLCHAIN_FILE=$SRCDIR/mingw-toolchain.cmake \
         -DJansson_INCLUDE_DIR=$BUILDDIR_MINGW/vita-toolchain/install/include/ \
         -DJansson_LIBRARY=$BUILDDIR_MINGW/vita-toolchain/install/lib/libjansson.a \
         -Dlibelf_INCLUDE_DIR=$BUILDDIR_MINGW/vita-toolchain/install/include/ \
         -Dlibelf_LIBRARY=$BUILDDIR_MINGW/vita-toolchain/install/lib/libelf.a \
+        -Dzlib_INCLUDE_DIR=$BUILDDIR_MINGW/vita-toolchain/install/include/ \
+        -Dzlib_LIBRARY=$BUILDDIR_MINGW/vita-toolchain/install/lib/libz.a \
+        -Dlibzip_INCLUDE_DIR=$BUILDDIR_MINGW/vita-toolchain/install/include/ \
+        -Dlibzip_CONFIG_INCLUDE_DIR=$BUILDDIR_MINGW/vita-toolchain/install/lib/libzip/include/ \
+        -Dlibzip_LIBRARY=$BUILDDIR_MINGW/vita-toolchain/install/lib/libzip.a \
         -DCMAKE_INSTALL_PREFIX=$INSTALLDIR_MINGW \
         $DEFAULT_JSON
 make
@@ -812,7 +871,7 @@ echo Task [Vita-3]: Deploy headers/generate libs [MinGW]
 cp $BUILDDIR_NATIVE/vitalibs/*.a $INSTALLDIR_MINGW/arm-vita-eabi/lib/
 cp -r $SRCDIR/$VITA_HEADERS/include $INSTALLDIR_MINGW/arm-vita-eabi/
 mkdir -p $INSTALLDIR_MINGW/share
-cp $SRCDIR/$VITA_HEADERS/db.json $SRCDIR/$VITA_HEADERS/extra.json $INSTALLDIR_MINGW/share
+cp $SRCDIR/$VITA_HEADERS/db.json $INSTALLDIR_MINGW/share
 
 find $INSTALLDIR_MINGW -name '*.la' -exec rm '{}' ';'
 
