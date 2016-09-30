@@ -1,6 +1,6 @@
 [submodule "src/newlib"]
 	path = src/newlib
-	url = https://github.com/vitasdk/newlib.git
+	url = https://github.com/frangarcj/newlib.git
 [submodule "src/vita-headers"]
 	path = src/vita-headers
 	url = https://github.com/vitasdk/vita-headers.git
