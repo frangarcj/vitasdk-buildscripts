@@ -6,36 +6,40 @@ matrix:
   exclude:
     - os: osx
       env: M32="-m32"
-
-compiler:
-    - apple-gcc42
+osx_image: xcode8
 
 language: cpp
 
+before_install:
+  - brew update
+  - brew outdated autoconf || brew upgrade autoconf
+  - brew outdated automake || brew upgrade automake
+  - brew outdated bison || brew upgrade bison
+  - brew outdated flex || brew upgrade flex
+  - brew outdated texinfo || brew upgrade texinfo
+  - brew install homebrew/dupes/ncurses
+  - brew outdated wget || brew upgrade wget
+  - brew outdated libelf || brew upgrade libelf
+  - brew outdated zlib || brew upgrade zlib
+  - brew outdated libtool || brew upgrade libtool
+  - brew outdated gmp || brew upgrade gmp
+  - brew outdated openssl || brew upgrade openssl
+  - brew outdated mpfr || brew upgrade mpfr
+  - brew outdated libmpc || brew upgrade libmpc
+  - brew outdated unrar || brew upgrade unrar
+  - brew outdated subversion || brew upgrade subversion
+  - brew outdated bzip2 || brew upgrade bzip2
+  - brew outdated cmake || brew upgrade cmake
+  - brew outdated go || brew upgrade go
 addons:
 script:
  - export REV=dirty-$(git describe --always)
- - wget https://launchpad.net/gcc-arm-embedded/4.9/4.9-2015-q3-update/+download/gcc-arm-none-eabi-4_9-2015q3-20150921-src.tar.bz2 --no-check-certificate
- - tar xjf gcc-arm-none-eabi-4_9-2015q3-20150921-src.tar.bz2
- - mv gcc-arm-none-eabi-4_9-2015q3-20150921/src/* ./src/
- - rm src/newlib.tar.bz2
- - cd src/
- - find . -name '*.tar.*' | xargs -I% tar -xf %
- - cd ..
- - wget http://www.digip.org/jansson/releases/jansson-2.7.tar.gz --no-check-certificate
- - tar xf jansson-2.7.tar.gz
- - mv jansson-2.7 src/
- - wget http://nih.at/libzip/libzip-1.1.3.tar.gz --no-check-certificate
- - tar xf libzip-1.1.3.tar.gz
- - mv libzip-1.1.3 src/
- - patch -p1 < vita.patch
  - chmod +x *.sh
- - ./build-phase1.sh
- - ./build-phase2.sh
+ - ./build.sh
 before_deploy:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - export GIT_TAG=$TRAVIS_BRANCH-0.1-v$TRAVIS_BUILD_NUMBER
+  - export GIT_TAG=$TRAVIS_BRANCH-$TRAVIS_OS_NAME-v$TRAVIS_BUILD_NUMBER
   - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
   - git push -q https://$TAGPERM@github.com/frangarcj/vitasdk-buildscripts --tags
 deploy:
