@@ -28,8 +28,8 @@ INSTALLDIR=${ROOTDIR}/install
 VITASDKROOT=${ROOTDIR}/vitasdk
 PACKAGEDIR=${ROOTDIR}/pkg
 RELEASEDATE=`date +%Y%m%d`
-PACKAGE_NAME=gcc-arm-vita-eabi-6.2-$RELEASEDATE
-PACKAGE_NAME_NATIVE=$PACKAGE_NAME-mac
+PACKAGE_NAME=gcc-arm-vita-eabi-6.2-${RELEASEDATE}
+PACKAGE_NAME_NATIVE=${PACKAGE_NAME}-mac
 
 
 # Strip binary files as in "strip binary" form, for both native(linux/mac) and mingw.
