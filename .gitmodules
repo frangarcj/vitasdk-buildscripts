@@ -6,7 +6,7 @@
 	url = https://github.com/vitasdk/vita-headers.git
 [submodule "src/vita-toolchain"]
 	path = src/vita-toolchain
-	url = https://github.com/vitasdk/vita-toolchain.git
+	url = https://github.com/173210/vita-toolchain.git
 [submodule "src/pthread-embedded"]
 	path = src/pthread-embedded
 	url = https://github.com/vitasdk/pthread-embedded.git
