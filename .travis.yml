@@ -11,26 +11,7 @@ osx_image: xcode8
 language: cpp
 
 before_install:
-  - brew update
-  - brew outdated autoconf || brew upgrade autoconf
-  - brew outdated automake || brew upgrade automake
-  - brew outdated bison || brew upgrade bison
-  - brew outdated flex || brew upgrade flex
-  - brew outdated texinfo || brew upgrade texinfo
   - brew install homebrew/dupes/ncurses
-  - brew outdated wget || brew upgrade wget
-  - brew outdated libelf || brew upgrade libelf
-  - brew outdated zlib || brew upgrade zlib
-  - brew outdated libtool || brew upgrade libtool
-  - brew outdated gmp || brew upgrade gmp
-  - brew outdated openssl || brew upgrade openssl
-  - brew outdated mpfr || brew upgrade mpfr
-  - brew outdated libmpc || brew upgrade libmpc
-  - brew outdated unrar || brew upgrade unrar
-  - brew outdated subversion || brew upgrade subversion
-  - brew outdated bzip2 || brew upgrade bzip2
-  - brew outdated cmake || brew upgrade cmake
-  - brew outdated go || brew upgrade go
 addons:
 script:
  - export REV=dirty-$(git describe --always)
