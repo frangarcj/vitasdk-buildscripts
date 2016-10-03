@@ -5,11 +5,14 @@
 uname_string=`uname | sed 'y/LINUXDARWINFREEOPENPCBSD/linuxdarwinfreeopenpcbsd/'`
 host_arch=`uname -m | sed 'y/XI/xi/'`
 if [ "x$uname_string" == "xlinux" ] ; then
+    BUILD="$host_arch"-linux-gnu
     HOST_NATIVE="$host_arch"-linux-gnu
     PACKAGE_NAME_SUFFIX=linux
+    READLINK=readlink
     GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
     JOBS=-j`grep ^processor /proc/cpuinfo|wc -l`
 elif [ "x$uname_string" == "xdarwin" ] ; then
+    BUILD=x86_64-apple-darwin10
     HOST_NATIVE=x86_64-apple-darwin10
     PACKAGE_NAME_SUFFIX=mac
     GCC_CONFIG_OPTS_LCPP="--with-host-libstdcxx=-static-libgcc -Wl,-lstdc++ -lm"

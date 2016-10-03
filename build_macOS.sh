@@ -217,7 +217,7 @@ if [ ${STEP5} ]; then
   rm -rf ${BUILDDIR}/gcc-${GCC_VERSION}
   mkdir -p ${BUILDDIR}/gcc-${GCC_VERSION}
   cd ${BUILDDIR}/gcc-${GCC_VERSION}
-  ../${SRCRELDIR}/gcc-${GCC_VERSION}/configure --host=${HOST_NATIVE} --build=${HOST_NATIVE} --target=arm-vita-eabi --prefix=${VITASDKROOT} --libexecdir=${VITASDKROOT}/lib --infodir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/info --mandir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/man --htmldir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/html --pdfdir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/pdf --enable-languages=c,c++ --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-newlib --without-headers --with-gnu-as --with-gnu-ld --with-python-dir=share/gcc-arm-vita-eabi --with-sysroot=${VITASDKROOT}/arm-vita-eabi --with-libiconv-prefix=${INSTALLDIR} --with-gmp=${INSTALLDIR} --with-mpfr=${INSTALLDIR} --with-mpc=${INSTALLDIR} --with-isl=${INSTALLDIR} --with-cloog=${INSTALLDIR} --disable-isl-version-check --with-libelf=${INSTALLDIR} "${GCC_CONFIG_OPTS_LCPP}" "--with-pkgversion=GNU Tools for ARM Embedded Processors [VitaSDK for macOs by bigboss]" --disable-multilib --with-arch=armv7-a --with-tune=cortex-a9 --with-fpu=neon --with-float=hard --with-mode=thumb CXXFLAGS="-g -O2 -fbracket-depth=2048" CFLAGS_FOR_TARGET="-O2" CXXFLAGS_FOR_TARGET="-O2"
+  ../${SRCRELDIR}/gcc-${GCC_VERSION}/configure --host=${HOST_NATIVE} --build=${HOST_NATIVE} --target=arm-vita-eabi --prefix=${VITASDKROOT} --libexecdir=${VITASDKROOT}/lib --infodir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/info --mandir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/man --htmldir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/html --pdfdir=${VITASDKROOT}/share/doc/gcc-arm-vita-eabi/pdf --enable-languages=c,c++ --disable-decimal-float --disable-libffi --disable-libgomp --disable-libmudflap --disable-libquadmath --disable-libssp --disable-libstdcxx-pch --disable-nls --disable-shared --disable-threads --disable-tls --with-newlib --without-headers --with-gnu-as --with-gnu-ld --with-python-dir=share/gcc-arm-vita-eabi --with-sysroot=${VITASDKROOT}/arm-vita-eabi --with-libiconv-prefix=${INSTALLDIR} --with-gmp=${INSTALLDIR} --with-mpfr=${INSTALLDIR} --with-mpc=${INSTALLDIR} --with-isl=${INSTALLDIR} --with-cloog=${INSTALLDIR} --disable-isl-version-check --with-libelf=${INSTALLDIR} "${GCC_CONFIG_OPTS_LCPP}" "--with-pkgversion=GNU Tools for ARM Embedded Processors [VitaSDK for macOs by bigboss]" --disable-multilib --with-arch=armv7-a --with-tune=cortex-a9 --with-fpu=neon --with-float=hard --with-mode=thumb 
   make ${JOBS} all-gcc
   make install-gcc
 fi
@@ -246,6 +246,7 @@ if [ ${STEP7} ]; then
 fi
 
 if [ ${STEP8} ]; then
+  echo "[Step 8] Build pthread-embedded..."
   rm -rf ${BUILDDIR}/pthread-embedded
   mkdir -p ${BUILDDIR}/pthread-embedded
   cd ${BUILDDIR}/pthread-embedded
