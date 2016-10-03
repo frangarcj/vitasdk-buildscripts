@@ -4,7 +4,7 @@ os:
 language: cpp
 
 before_install:
-  - sudo apt-get install -y autoconf automake bison build-essential bzip2  cmake flex git libgmp3-dev libjansson-dev libncurses5-dev libtool libzip-dev pkg-config python python-dev subversion  texinfo wget zlib1g-dev xutils-dev
+  - sudo apt-get install -y autoconf automake bison build-essential bzip2  cmake flex git libgmp3-dev libjansson-dev libncurses5-dev libtool libzip-dev pkg-config python python-dev subversion  texinfo wget zlib1g-dev xutils-dev g++
 addons:
 script:
  - export REV=dirty-$(git describe --always)
