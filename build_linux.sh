@@ -331,7 +331,7 @@ fi
 
 if [ ${STEP11} ]; then
   echo "[Step 11] Package binaries..."
-  tar cjf ${PACKAGEDIR}/${PACKAGE_NAME_NATIVE}.tar.bz2  -C ${ROOTDIR} \
+  tar cjf ${PACKAGEDIR}/${PACKAGE_NAME_NATIVE}.tar.bz2  -C ${VITASDKROOT} \
     ${VITASDKROOT}/arm-vita-eabi     \
     ${VITASDKROOT}/bin               \
     ${VITASDKROOT}/lib               \
